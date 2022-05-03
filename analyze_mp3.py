@@ -7,8 +7,6 @@ from eyed3 import mp3
 import time
 from write_directory_to_variable import song
 
-#song = song_location
-#song = "Z:/Vibe Playlists\Throwbacks\Taio Cruz - Hangover ft. Flo Rida.mp3"
 audio1 = ID3(song) #artist,album,title,bpm,initial key,date,
 audio2 = MP3(song) #length
 audio3 = eyed3.load(song) #publisher
@@ -121,58 +119,4 @@ def Print_Metadata():
     print("Publisher:",publisher)
     print("Bitrate:",bitrate)
     print("File Location",file_location)
-Print_Metadata()
-
-#############################
-#       DEBUGGING           #
-#############################
-#if type(bitrate)==str:
-#    print("True")
-#else:
-#    print("False")
-
-###################################################
-#                 read line by line               #
-###################################################
-#def scan_file_metadata():
-#    with open('E:\Documents\Russel Record Pool\py_test.txt.txt', 'r') as music_files:
-#            data = music_files.readlines()
-#            Print_Metadata()
-        
-#scan_file_metadata()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-##############################################################
-#                    Write to JSON                           #
-##############################################################
-def write_to_json():
-    {
-        "artist": artist,
-        "title": title,
-        "album": album,
-        "genre": genre,
-        "bpm": bpm,
-        "initial_key": initial_key,
-        "date": date,
-        "length": length,
-        "publisher": publisher,
-        "bitrate": bitrate
-    }
-#write_to_json()
-#print(write_to_json)
+#Print_Metadata()

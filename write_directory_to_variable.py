@@ -1,3 +1,4 @@
+from calendar import prmonth
 import glob
 import time
 
@@ -8,7 +9,7 @@ def write_directory_to_variable():
     for file in files:
         global song
         song = file
-    print(song)
+        #print(song)
 write_directory_to_variable()
 
-print("my program took", time.time() - start_time, "seconds to run")
+#print("my program took", time.time() - start_time, "seconds to run")
