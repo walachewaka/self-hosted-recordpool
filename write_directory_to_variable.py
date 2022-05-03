@@ -11,21 +11,4 @@ def write_directory_to_variable():
     print(song)
 write_directory_to_variable()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 print("my program took", time.time() - start_time, "seconds to run")
