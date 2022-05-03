@@ -5,10 +5,10 @@ from mutagen.mp3 import MP3
 import eyed3
 from eyed3 import mp3
 import time
-from assign_file_location_to_variable import *
+from write_directory_to_variable import song
 
-#song = assign_fiie_location_to_variable.song_location
-song = "Z:/Vibe Playlists\Throwbacks\Taio Cruz - Hangover ft. Flo Rida.mp3"
+#song = song_location
+#song = "Z:/Vibe Playlists\Throwbacks\Taio Cruz - Hangover ft. Flo Rida.mp3"
 audio1 = ID3(song) #artist,album,title,bpm,initial key,date,
 audio2 = MP3(song) #length
 audio3 = eyed3.load(song) #publisher
@@ -106,24 +106,22 @@ def analyze_metadata():
 #    print("Bit rate:",song_bitrate, "kbps") #bitrate
     global bitrate
     bitrate = song_bitrate
-
-#to call function u do this#
 analyze_metadata()
 
 #testing global variables for json
-#def Print_Metadata():
-    #print("Artist:",artist)
-    #print("Title:",title)
-    #print("Album:",album)
-    #print("Genre:",genre)
-    #print("BPM:",bpm)
-    #print("Initial Key:",initial_key)
-    #print("Date:",date)
-    #print("Length:",length)
-    #print("Publisher:",publisher)
-    #print("Bitrate:",bitrate)
-    #print("File Location",file_location)
-#Print_Metadata()
+def Print_Metadata():
+    print("Artist:",artist)
+    print("Title:",title)
+    print("Album:",album)
+    print("Genre:",genre)
+    print("BPM:",bpm)
+    print("Initial Key:",initial_key)
+    print("Date:",date)
+    print("Length:",length)
+    print("Publisher:",publisher)
+    print("Bitrate:",bitrate)
+    print("File Location",file_location)
+Print_Metadata()
 
 #############################
 #       DEBUGGING           #

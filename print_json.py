@@ -1,5 +1,6 @@
 import json
 from analyze_mp3 import artist, title, album, genre, bpm, initial_key, date, length, publisher, bitrate, file_location
+from write_directory_to_variable import song
 
 def write_to_json():
     global json_song_info
