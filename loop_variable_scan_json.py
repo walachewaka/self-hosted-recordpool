@@ -1,5 +1,6 @@
 import glob
 import time
+from config import music_folder
 import re
 from mutagen.id3 import ID3, ID3NoHeaderError, ID3Warning
 from mutagen.mp3 import MP3, HeaderNotFoundError, MutagenError, InvalidMPEGHeader
@@ -12,7 +13,7 @@ import json
 start_time = time.time()
 
 def write_directory_to_variable():
-    files = glob.iglob('E:/Music/temp' + '/**/*.mp3', recursive=True)
+    files = glob.iglob(music_folder + '/**/*.mp3', recursive=True)
     for file in files:
         song = file
         audio1 = ID3(song) #artist,album,title,bpm,initial key,date,
