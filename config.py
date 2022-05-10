@@ -2,4 +2,6 @@
 #Configuration File#
 ####################
 #path to Music Folder
-music_folder = 'Z:\Temp'
+music_folder = 'E:/Music'
+
+exceptions = 'AttributeError, HeaderNotFoundError, KeyError, ID3Warning, NameError'

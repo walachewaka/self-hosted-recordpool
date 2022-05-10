@@ -9,7 +9,7 @@ from eyed3 import mp3
 import json
 import os
 
-def write_directory_to_variable():
+def metadata_analyzer():
     start_time = time.time()
     files = glob.iglob(music_folder + '/**/*.mp3', recursive=True)
     for file in files:
@@ -143,4 +143,4 @@ def write_directory_to_variable():
     program_duration = time.strftime("%H:%M:%S", time.gmtime(Program_Duration))
     file_count = sum(len(files) for _, _, files in os.walk(music_folder))
     print("The program took", program_duration, "to scan", file_count, "songs")
-write_directory_to_variable()
+#metadata_analyzer()
