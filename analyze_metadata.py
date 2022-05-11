@@ -41,7 +41,7 @@ def metadata_analyzer():
         except AttributeError as e3:
             print(e3)
             pass
-        
+        ##need to break loop if 2 errors above here
         try:
             Artist = audio1['TPE1'].text[0]
             #print("Artist:",Artist) #Artist
