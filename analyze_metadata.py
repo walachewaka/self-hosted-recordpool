@@ -1,6 +1,6 @@
 import glob
 import time
-from config import music_folder, exceptions
+from config import music_folder
 import re
 from mutagen.id3 import ID3, ID3Warning, ID3NoHeaderError
 from mutagen.mp3 import MP3, HeaderNotFoundError
@@ -12,47 +12,45 @@ import os
 def metadata_analyzer():
     start_time = time.time()
     files = glob.iglob(music_folder + '/**/*.mp3', recursive=True)
+    artist = ""
+    title = ""
+    album = ""
+    genre = ""
+    bpm = ""
+    initial_key = ""
+    date = ""
+    length = ""
+    publisher = ""
+    bitrate = ""
     for file in files:
         song = file
         try:
             audio1 = ID3(song) #artist,album,title,bpm,initial key,date,
-        except (HeaderNotFoundError, ID3NoHeaderError):
-            print("No Metadata")
+        except ID3NoHeaderError as e1:
+            #print("No Metadata for", song)
+            print(e1)
             pass
         try:
             audio2 = MP3(song) #length
-        except HeaderNotFoundError:
-            print("No Length")
+        except HeaderNotFoundError as e2:
+            print(e2)
             pass
         audio3 = eyed3.load(song) #publisher,genre
         try:
             audio4 = mp3.Mp3AudioFile(song) #bitrate
-        except AttributeError:
-            print("No BPM")
+        except AttributeError as e3:
+            print(e3)
             pass
-        artist = ""
-        title = ""
-        album = ""
-        genre = ""
-        bpm = ""
-        initial_key = ""
-        date = ""
-        length = ""
-        publisher = ""
-        bitrate = ""
-        file_location = song
-
+        
         try:
             Artist = audio1['TPE1'].text[0]
             #print("Artist:",Artist) #Artist
-            #global artist 
             artist = Artist
         except (KeyError, NameError, AttributeError):
             #print("no artist")
             pass
         try:
             Title = audio1['TIT2'].text[0]
-        #    #global title
             title = Title             
         #    #print("Title:",audio1['TIT2'].text[0]) #title
         except (KeyError, AttributeError):
@@ -67,7 +65,6 @@ def metadata_analyzer():
             pass
         try:
             Genre = audio3.tag.genre.name
-            #global genre
             genre = Genre
             #print("Genre:",audio3.tag.genre.name) #genre
         except (AttributeError, ID3Warning):
@@ -82,7 +79,6 @@ def metadata_analyzer():
             pass
         try:        
             Initial_Key = audio1['TKEY'].text[0]
-            #global initial_key
             initial_key = Initial_Key
             #print("Initial Key:",audio1['TKEY'].text[0]) #initial key
         except KeyError:
@@ -90,7 +86,6 @@ def metadata_analyzer():
             pass
         try:        
             Date = audio1['TDRC'].text[0]
-            #global date
             date = Date
             #print("Date:",audio1['TDRC'].text[0]) #date/year
         except KeyError:
@@ -101,7 +96,6 @@ def metadata_analyzer():
             def convert(seconds):
                 return time.strftime("%M:%S", time.gmtime(song_length))
             #print("Length:",convert(song_length))
-            #global length
             length = time.strftime("%M:%S", time.gmtime(song_length))
         except(HeaderNotFoundError) as error:
         #   print(error, song)
@@ -109,7 +103,6 @@ def metadata_analyzer():
         try:
             Publisher = audio3.tag.publisher
             #print("Publisher:",audio3.tag.publisher) #publisher
-            #global publisher
             publisher = Publisher
         except (AttributeError):
             #print("No Publisher")
@@ -118,7 +111,6 @@ def metadata_analyzer():
             song_bitrate = str(audio4.info.bit_rate)
             song_bitrate = re.sub('[^0-9]', '', song_bitrate)
             #print("Bit rate:",song_bitrate, "kbps") #bitrate
-            #global bitrate
             bitrate = song_bitrate
             #print("File Location:",file_location, '\n')
         except AttributeError:
@@ -134,7 +126,7 @@ def metadata_analyzer():
         "length": length,
         "publisher": publisher,
         "bitrate": bitrate,
-        "song location": file_location
+        "song location": song
         }
         song_json = json.dumps(str(json_song_info))
         #print(song_json, '\n')
@@ -143,4 +135,4 @@ def metadata_analyzer():
     program_duration = time.strftime("%H:%M:%S", time.gmtime(Program_Duration))
     file_count = sum(len(files) for _, _, files in os.walk(music_folder))
     print("The program took", program_duration, "to scan", file_count, "songs")
-#metadata_analyzer()
+metadata_analyzer()
