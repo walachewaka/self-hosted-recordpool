@@ -5,7 +5,7 @@ from multiprocessing import Pool
 def worker(task):
     pool_size = 1000  # your "parallelness"
     try:
-        metadata_analyzer()
+        metadata_analyzer
     except KeyboardInterrupt:
         print('error with item')
     for tasks in task:
