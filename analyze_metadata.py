@@ -22,24 +22,26 @@ def metadata_analyzer():
     length = ""
     publisher = ""
     bitrate = ""
+    exceptions = (AttributeError, HeaderNotFoundError, ID3NoHeaderError)
+    #exception_count = sum(1 for e in exceptions if e)
     for file in files:
         song = file
         try:
             audio1 = ID3(song) #artist,album,title,bpm,initial key,date,
         except ID3NoHeaderError as e1:
             #print("No Metadata for", song)
-            print(e1)
+            #print("Audio 1", e1)
             pass
         try:
             audio2 = MP3(song) #length
         except HeaderNotFoundError as e2:
-            print(e2)
+            #print("Audio 2", e2)
             pass
         audio3 = eyed3.load(song) #publisher,genre
         try:
             audio4 = mp3.Mp3AudioFile(song) #bitrate
         except AttributeError as e3:
-            print(e3)
+            #print("Audio 3",e3)
             pass
         ##need to break loop if 2 errors above here
         try:
@@ -129,7 +131,7 @@ def metadata_analyzer():
         "song location": song
         }
         song_json = json.dumps(str(json_song_info))
-        #print(song_json, '\n')
+        print(song_json, '\n')
     end_time = time.time()
     Program_Duration = end_time - start_time
     program_duration = time.strftime("%H:%M:%S", time.gmtime(Program_Duration))
