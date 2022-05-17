@@ -1,8 +1,15 @@
+from cgitb import text
+from email.mime import audio
 import glob
+from pprint import pprint
 import time
+from turtle import update
+
+from setuptools import Command
 from config import music_folder
 import re
-from mutagen.id3 import ID3, ID3Warning, ID3NoHeaderError
+from mutagen.id3 import ID3, ID3v1SaveOptions, ID3Warning, ID3NoHeaderError, COMM, TRCK
+from mutagen.apev2 import APEv2, APENoHeaderError
 from mutagen.mp3 import MP3, HeaderNotFoundError
 import eyed3
 from eyed3 import mp3
@@ -15,6 +22,11 @@ def metadata_analyzer():
     artist = ""
     title = ""
     album = ""
+    #album artist
+    #track
+    #disc number
+    comment = ""
+    #composer
     genre = ""
     bpm = ""
     initial_key = ""
@@ -28,6 +40,13 @@ def metadata_analyzer():
         song = file
         try:
             audio1 = ID3(song) #artist,album,title,bpm,initial key,date,
+            #audio1.delete()
+            audio1.setall(COMM[COMM])
+            #audio1.delall('TALB')
+            #audio1.delall("APIC")
+            audio1.save
+            #audio1.delete(COMM)
+            #print(audio1.getall, '\n')
         except ID3NoHeaderError as e1:
             #print("No Metadata for", song)
             print("ERROR", e1)
@@ -121,6 +140,11 @@ def metadata_analyzer():
             #print("File Location:",file_location, '\n')
         except AttributeError:
             pass
+        try:
+            Comment = audio1.getall('COMM')
+            comment = Comment
+        except:
+            pass
         json_song_info = {
         "artist": artist,
         "title": title,
@@ -132,7 +156,8 @@ def metadata_analyzer():
         "length": length,
         "publisher": publisher,
         "bitrate": bitrate,
-        "song location": song
+        "song location": song,
+        "comment": comment
         }
         song_json = json.dumps(str(json_song_info))
         print(song_json, '\n') #debugging
